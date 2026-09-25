@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English to SASL Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { color: #4CAF50; margin-bottom: 20px; }
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            gap: 20px;
+        }
+        .panel {
+            flex: 1;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .avatar-panel {
+            flex: 1;
+            background: #000000;
+            border-radius: 8px;
+            height: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+        textarea {
+            width: 95%;
+            height: 80px;
+            background: #2b2b2b;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px;
+            border-radius: 4px;
+            resize: none;
+        }
+        .btn-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-primary { background-color: #4CAF50; color: white; }
+        .btn-secondary { background-color: #2196F3; color: white; }
+        .output-box {
+            margin-top: 20px;
+            background: #252525;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        #avatarCanvas { width: 100%; height: 100%; display: block; }
+    </style>
+
+    <!-- CDN Links for Three.js 3D Engine & GLTF Loader -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+</head>
+<body>
+
+    <h1>English to SASL Translator</h1>
+
+    <div class="container">
+        <!-- Control Panel -->
+        <div class="panel">
+            <h3>Input Control</h3>
+            <textarea id="inputText" placeholder="Type an English sentence here..."></textarea>
+            
+            <div class="btn-group">
+                <button class="btn-primary" onclick="translateText()">Translate Text</button>
+                <button class="btn-secondary" id="recordBtn" onclick="toggleRecord()">🎤 Record Voice</button>
+            </div>
+
+            <div class="output-box">
+                <strong>Translated Glosses:</strong>
+                <p id="glossOutput">[ GLOSS SEQUENCE WILL APPEAR HERE ]</p>
+            </div>
+        </div>
+
+        <!-- 3D Avatar Canvas Panel -->
+        <div class="avatar-panel">
+            <canvas id="avatarCanvas"></canvas>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
