@@ -1,3 +1,6 @@
+// Live Google Colab API URL
+const API_BASE_URL = "https://handiness-delay-preoccupy.ngrok-free.dev";
+
 // Setup 3D Viewport Scene
 const container = document.querySelector('.avatar-panel');
 const canvas = document.getElementById('avatarCanvas');
@@ -31,16 +34,37 @@ scene.add(placeholderAvatar);
 // Continuous Animation Frame Loop
 function animate() {
     requestAnimationFrame(animate);
-    placeholderAvatar.rotation.y += 0.01; // Gentle idle rotation
+    placeholderAvatar.rotation.y += 0.01;
     renderer.render(scene, camera);
 }
 animate();
 
-// UI Action Handlers
-function translateText() {
-    const text = document.getElementById('inputText').value;
+// API Translation Handler
+async function translateText() {
+    const inputField = document.getElementById('inputText');
+    const text = inputField.value.trim();
     if (!text) return;
-    document.getElementById('glossOutput').innerText = "TRANSLATING: " + text.toUpperCase();
+
+    document.getElementById('glossOutput').innerText = "Connecting to Google Colab engine...";
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/translate_text`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            document.getElementById('glossOutput').innerText = data.glosses.join(" ");
+            console.log("Keypoint Mapping Payload:", data.keypoint_matches);
+        } else {
+            document.getElementById('glossOutput').innerText = "Translation Error: " + data.detail;
+        }
+    } catch (error) {
+        document.getElementById('glossOutput').innerText = "API Connection Failed. Ensure Colab server is running.";
+        console.error("Fetch Error:", error);
+    }
 }
 
 function toggleRecord() {
