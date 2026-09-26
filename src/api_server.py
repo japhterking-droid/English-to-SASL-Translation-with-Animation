@@ -1,8 +1,14 @@
+import sys
+import os
+import shutil
+from pathlib import Path
+
+# Ensure the current directory (src/) is in Python's search path
+sys.path.append(str(Path(__file__).resolve().parent))
+
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import shutil
-import os
 
 from text_parser import english_to_gloss
 from gloss_indexer import How2SignIndexer
